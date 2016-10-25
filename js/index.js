@@ -1,9 +1,20 @@
-  // Get value from input, inject to query string in call to API/
-	$('#search-button').on('click', function() {
+
+// Get value from input, inject to query string in call to API.
+var searchReq = function() {
 		var search = $('#search-box').val();
 		$('.search').animate({ 'marginTop': "-=10em"});
 		ajaxCall(search);
-	});
+	};
+
+	// Call searchReq on click
+	$('#search-button').on('click', searchReq);
+
+	// If enter key is pressed, run search.
+	$(document).keypress(function(e) {
+    if (e.which === 13) {
+       searchReq();
+    }
+});
 
 	// Check if the input was cleared
 	$('#search-box').on("mouseup", function(){
