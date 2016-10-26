@@ -1,19 +1,34 @@
-
-// Get value from input, inject to query string in call to API.
-var searchReq = function() {
+	// Get value from input, inject to query string in call to API.
+	var searchReq = function() {
+		removeResults();
 		var search = $('#search-box').val();
-		$('.search').animate({ 'marginTop': "-=10em"});
+		if (!$('.search').hasClass('searching')) {
+			$('.search').addClass('searching');
+			$('.search').animate({ 'marginTop': "-=10em"});
+		}
 		ajaxCall(search);
+	};
+
+	// Remove search results from page.
+	 function removeResults() {
+			if ($('.search').hasClass('searching')) {
+				$('section').remove();
+				$('.search').animate({'marginTop': "+=10em"});
+				$('.search').removeClass('searching');
+			 }
 	};
 
 	// Call searchReq on click
 	$('#search-button').on('click', searchReq);
 
 	// If enter key is pressed, run search.
-	$(document).keypress(function(e) {
+	// Else if escape is pressed, remove results.
+	$(document).keyup(function(e) {
     if (e.which === 13) {
-       searchReq();
-    }
+    	searchReq();
+    } else if (e.keyCode === 27) {
+				removeResults();
+		 }
 });
 
 	// Check if the input was cleared
@@ -21,7 +36,7 @@ var searchReq = function() {
   var $input = $(this);
   var oldValue = $input.val();
 
-  if (oldValue === '') {
+  if (oldValue === '' && !$('.search').hasClass('searching')) {
 		return;
 	}
 
@@ -30,8 +45,7 @@ var searchReq = function() {
     var newValue = $input.val();
 
     if (newValue === ''){
-      $('section').remove();
-			$('.search').animate({'marginTop': "+=10em"});
+      removeResults();
     }
   }, 1);
 });
