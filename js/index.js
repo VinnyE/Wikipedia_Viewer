@@ -4,7 +4,7 @@
 		var search = $('#search-box').val();
 		if (!$('.search').hasClass('searching')) {
 			$('.search').addClass('searching');
-			$('.search').animate({ 'marginTop': "-=10em"});
+			$('.search').animate({ 'marginTop': "-=2em"});
 		}
 		ajaxCall(search);
 	};
@@ -13,7 +13,7 @@
 	 function removeResults() {
 			if ($('.search').hasClass('searching')) {
 				$('section').remove();
-				$('.search').animate({'marginTop': "+=10em"});
+				$('.search').animate({'marginTop': "+=2em"});
 				$('.search').removeClass('searching');
 			 }
 	};
